@@ -1,0 +1,44 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:" + property('springBootVersion'))
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'org.ubs-free'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+//ext {
+//	springBootVersion = '1.5.9.RELEASE'
+//}
+
+dependencies {
+
+//	def	springFrameworkVersion = '4.3.13.RELEASE'
+
+//	compile('org.springframework.boot:spring-boot-web-starter')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	// Spring framework
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:property('springBootVersion')
+//	compile group: 'org.springframework', name: 'spring-core', version: springFrameworkVersion
+//	compile group: 'org.springframework', name: 'spring-context', version: springFrameworkVersion
+//	compile group: 'org.springframework', name: 'spring-web', version: springFrameworkVersion
+//	compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.13.RELEASE'
+
+}
