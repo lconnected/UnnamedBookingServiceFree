@@ -23,22 +23,13 @@ repositories {
 	mavenCentral()
 }
 
-//ext {
-//	springBootVersion = '1.5.9.RELEASE'
-//}
-
 dependencies {
-
-//	def	springFrameworkVersion = '4.3.13.RELEASE'
-
-//	compile('org.springframework.boot:spring-boot-web-starter')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
 
 	// Spring framework
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:property('springBootVersion')
-//	compile group: 'org.springframework', name: 'spring-core', version: springFrameworkVersion
-//	compile group: 'org.springframework', name: 'spring-context', version: springFrameworkVersion
-//	compile group: 'org.springframework', name: 'spring-web', version: springFrameworkVersion
-//	compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.13.RELEASE'
+
+	// Tests
+	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+	testCompile group: 'junit', name: 'junit', version: '4.12'
 
 }
