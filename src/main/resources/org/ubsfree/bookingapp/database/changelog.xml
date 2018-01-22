@@ -5,15 +5,6 @@
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-  <changeSet id="1" author="lconnected">
-    <createTable tableName="test1">
-      <column name="id" type="number"/>
-      <column name="name" type="varchar"/>
-    </createTable>
-    <rollback>
-      <dropTable tableName="test1"/>
-    </rollback>
-  </changeSet>
-
+  <include file="initial/initial.changeset.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -45,7 +45,7 @@ dependencies {
 
 }
 
-def changeLog = "$projectDir/src/main/resources/database/changelog.xml"
+def changeLog = "$projectDir/src/main/resources/org/ubsfree/bookingapp/database/changelog.xml"
 task('databaseDev') << {
 	println "installing database for developers environment"
 	liquibase {
