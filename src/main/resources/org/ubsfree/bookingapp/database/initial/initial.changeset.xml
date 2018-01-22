@@ -10,19 +10,47 @@
       <column name="id" type="number">
         <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
-      <column name="timeStart" type="timestamp">
+      <column name="time_start" type="timestamp">
         <constraints nullable="false"/>
       </column>
-      <column name="serviceId" type="number">
+      <column name="service_id" type="number">
         <constraints nullable="false"/>
       </column>
-      <column name="specialistId" type="number">
+      <column name="specialist_id" type="number">
         <constraints nullable="false"/>
       </column>
     </createTable>
-    <rollback>
-      <dropTable tableName="Booking"/>
-    </rollback>
+    <createTable tableName="Service">
+      <column name="id" type="number">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="duration_minutes" type="number">
+        <constraints nullable="false"/>
+      </column>
+      <column name="cooldown_minutes" type="number">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+    <createTable tableName="Specialists">
+      <column name="id" type="number">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="first_name" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+      <column name="second_name" type="number">
+        <constraints nullable="false"/>
+      </column>
+      <column name="middle_name" type="number"/>
+    </createTable>
+    <createTable tableName="Service_Specialists">
+      <column name="service_id" type="number">
+        <constraints nullable="false"/>
+      </column>
+      <column name="specialist_id" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
   </changeSet>
 
   <changeSet id="initial-1.0" author="lconnected">
