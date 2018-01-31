@@ -34,6 +34,8 @@ dependencies {
 
 	// Spring framework
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:property('springBootVersion')
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:property('springBootVersion')
+
 	// Liquibase
 	compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
 	compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
@@ -45,9 +47,9 @@ dependencies {
 
 }
 
-def changeLog = "$projectDir/src/main/resources/org/ubsfree/bookingapp/database/changelog.xml"
 task('databaseDev') << {
 	println "installing database for developers environment"
+	def changeLog = "$projectDir/src/main/resources/org/ubsfree/bookingapp/database/changelog-dev.xml"
 	liquibase {
 		activities {
 			main {

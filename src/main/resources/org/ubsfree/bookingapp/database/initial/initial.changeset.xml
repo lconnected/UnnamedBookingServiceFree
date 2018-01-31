@@ -5,9 +5,13 @@
     xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet id="empty" author="lconnected">
+    <tagDatabase tag="empty"/>
+  </changeSet>
+
   <changeSet id="global-init" author="lconnected">
-    <createTable tableName="Booking">
-      <column name="id" type="number">
+    <createTable tableName="booking">
+      <column name="id" type="serial">
         <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
       <column name="time_start" type="timestamp">
@@ -20,10 +24,14 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
-    <createTable tableName="Service">
-      <column name="id" type="number">
+    <createTable tableName="service">
+      <column name="id" type="serial">
         <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
+      <column name="name" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="text"/>
       <column name="duration_minutes" type="number">
         <constraints nullable="false"/>
       </column>
@@ -31,26 +39,32 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
-    <createTable tableName="Specialists">
-      <column name="id" type="number">
+    <createTable tableName="specialist">
+      <column name="id" type="serial">
         <constraints nullable="false" primaryKey="true" unique="true"/>
       </column>
       <column name="first_name" type="varchar">
         <constraints nullable="false"/>
       </column>
-      <column name="second_name" type="number">
+      <column name="second_name" type="varchar">
         <constraints nullable="false"/>
       </column>
-      <column name="middle_name" type="number"/>
+      <column name="middle_name" type="varchar"/>
     </createTable>
-    <createTable tableName="Service_Specialists">
+    <createTable tableName="service_specialist">
       <column name="service_id" type="number">
         <constraints nullable="false"/>
       </column>
-      <column name="specialist_id" type="varchar">
+      <column name="specialist_id" type="number">
         <constraints nullable="false"/>
       </column>
     </createTable>
+    <rollback>
+      <dropTable tableName="booking" cascadeConstraints="true"/>
+      <dropTable tableName="service" cascadeConstraints="true"/>
+      <dropTable tableName="specialist" cascadeConstraints="true"/>
+      <dropTable tableName="service_specialist" cascadeConstraints="true"/>
+    </rollback>
   </changeSet>
 
   <changeSet id="initial-1.0" author="lconnected">

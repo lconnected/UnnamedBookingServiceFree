@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+  <changeSet id="test-data" author="lconnected">
+    <sqlFile path="scripts/test_data.sql" relativeToChangelogFile="true"/>
+    <rollback>
+      <delete tableName="service"/>
+      <delete tableName="specialist"/>
+      <delete tableName="service_specialist"/>
+    </rollback>
+  </changeSet>
+
+  <changeSet id="initial-1.0" author="lconnected">
+    <tagDatabase tag="initial-1.0-dev"/>
+  </changeSet>
+
+</databaseChangeLog>
