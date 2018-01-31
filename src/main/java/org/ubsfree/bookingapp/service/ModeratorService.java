@@ -16,7 +16,11 @@ public class ModeratorService {
     @Autowired
     private ServiceRepository serviceRepository;
 
-    public List<ServiceEntity> getAllServices() {
+    public List<ServiceEntity> listServices() {
         return (List<ServiceEntity>) serviceRepository.findAll();
+    }
+
+    public ServiceEntity concreteService(Long serviceId) {
+        return serviceRepository.findOne(serviceId);
     }
 }
