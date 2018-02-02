@@ -1,19 +1,19 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.9.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-		maven { // Gradle plugins
-			url "https://plugins.gradle.org/m2/"
-		}
-	}
-	dependencies {
-		classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: property('springBootVersion')
-		classpath group: 'org.liquibase', name: 'liquibase-gradle-plugin', version: property('liquibasePluginVersion')
-		classpath group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
-		classpath group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
-	}
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven { // Gradle plugins
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: property('springBootVersion')
+        classpath group: 'org.liquibase', name: 'liquibase-gradle-plugin', version: property('liquibasePluginVersion')
+        classpath group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
+        classpath group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+    }
 }
 
 apply plugin: 'java'
@@ -27,37 +27,45 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
 
-	// Spring framework
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:property('springBootVersion')
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version:property('springBootVersion')
+    // Spring framework
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: property('springBootVersion')
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: property('springBootVersion')
 
-	// Liquibase
-	compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
-	compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
+    // Liquibase
+    compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
 
-
-	// Tests
-	testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-	testCompile group: 'junit', name: 'junit', version: '4.12'
+    // Tests
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
 
 }
 
-task('databaseDev') << {
-	println "installing database for developers environment"
-	def changeLog = "$projectDir/src/main/resources/org/ubsfree/bookingapp/database/changelog-dev.xml"
-	liquibase {
-		activities {
-			main {
-				changeLogFile changeLog
-				url 'jdbc:postgresql://localhost:5432/booking-app-dev'
-				username 'postgres'
-				password 'root00'
-			}
-		}
-	}
+// creating javadoc task for the code
+javadoc {
+    source = sourceSets.main.allJava
+    classpath = sourceSets.main.compileClasspath
+	destinationDir = file("${buildDir}/docs")
+}
+
+task('databaseDev') {
+    doLast {
+        println "installing database for developers environment"
+        def changeLog = "$projectDir/src/main/resources/org/ubsfree/bookingapp/database/changelog-dev.xml"
+        liquibase {
+            activities {
+                main {
+                    changeLogFile changeLog
+                    url 'jdbc:postgresql://localhost:5432/booking-app-dev'
+                    username 'postgres'
+                    password 'root00'
+                }
+            }
+        }
+    }
 }
