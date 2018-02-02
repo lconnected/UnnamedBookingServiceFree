@@ -24,23 +24,65 @@ public class ServiceController {
     private ModeratorService moderatorService;
 
     /**
-     * @param pageable consists of
-     *                 <ul>
-     *                 <li>page - page number</li>
-     *                 <li>size - number of records on the page</li>
-     *                 </ul>
-     * @return
+     * <p>Method to retrieve page of Services.</p>
+     * <p>Request mapping: /service/list</p>
+     * <p>Request method: <b>GET</b></p>
+     * <p>Path variables: none</p>
+     * <p>Request parameters:</p>
+     * <ul>
+     * <li>page - page number</li>
+     * <li>size - number of records on the page</li>
+     * <li>sort - sort parameter</li>
+     * </ul>
+     * <p>Request body: none</p>
+     * <p>Note: Can return object with empty content property.</p>
+     *
+     * @param pageable
+     * @return Page of ServiceEntity
      */
     @GetMapping("/list")
     public Page<ServiceEntity> listServices(Pageable pageable) {
         return moderatorService.listServices(pageable);
     }
 
+    /**
+     * <p>Method to retrieve concrete Service.</p>
+     * <p>Request mapping: /service/{serviceId}</p>
+     * <p>Request method: <b>GET</b></p>
+     * <p>Path variables: </p>
+     * <ul>
+     * <li>serviceId - the unique id of Service</li>
+     * </ul>
+     * <p>Request parameters: none</p>
+     * <p>Request body: none</p>
+     * <p>Note: Can return NOT_FOUND status</p>
+     *
+     * @param serviceId unique id of ServiceEntity
+     * @return single ServiceEntity
+     * @throws ItemNotFoundException when requested entity not found
+     */
     @GetMapping("/{serviceId}")
     public ServiceEntity concreteService(@PathVariable Long serviceId) throws ItemNotFoundException {
         return moderatorService.concreteService(serviceId);
     }
 
+    /**
+     * <p>Method to update concrete Service.</p>
+     * <p>Request mapping: /service/{serviceId}</p>
+     * <p>Request method: <b>PUT</b></p>
+     * <p>Path variables: </p>
+     * <ul>
+     * <li>serviceId - the unique id of Service</li>
+     * </ul>
+     * <p>Request parameters: none</p>
+     * <p>Request body: ServiceEntity object.</p>
+     * <p>Note: Id specified in request body will be ignored</p>
+     *
+     * @param serviceId unique id of ServiceEntity
+     * @param entity ServiceEntity object
+     * @return single updated ServiceEntity
+     * @throws UpdateNotExsitingItemException when requested entity not found
+     */
     @PutMapping("/{serviceId}")
     public ServiceEntity updateService(@PathVariable Long serviceId, @RequestBody ServiceEntity entity) throws UpdateNotExsitingItemException {
         entity.setId(serviceId);
