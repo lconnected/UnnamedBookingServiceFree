@@ -10,7 +10,6 @@ import org.ubsfree.bookingapp.data.entity.ServiceEntity;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemAlreadyExistsException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
-import org.ubsfree.bookingapp.exception.data.dto.ErrorMessage;
 import org.ubsfree.bookingapp.service.ModeratorService;
 
 /**
@@ -57,23 +56,4 @@ public class ServiceController {
         moderatorService.deleteService(serviceId);
         return new ResponseMessage("Object removed successfully", HttpStatus.OK.value());
     }
-
-    @ExceptionHandler(UpdateNotExsitingItemException.class)
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public Object handleUpdateExceptions(Exception exception) {
-        return new ErrorMessage(HttpStatus.NOT_ACCEPTABLE.value(), exception.getMessage());
-    }
-
-    @ExceptionHandler(ItemAlreadyExistsException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public Object handleAddExceptions(Exception exception) {
-        return new ErrorMessage(HttpStatus.CONFLICT.value(), exception.getMessage());
-    }
-
-    @ExceptionHandler(DeleteNotExsitingItemException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Object handleRemoveExceptions(Exception exception) {
-        return new ErrorMessage(HttpStatus.NOT_FOUND.value(), exception.getMessage());
-    }
-
 }
