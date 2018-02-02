@@ -9,6 +9,7 @@ import org.ubsfree.bookingapp.controller.dto.ResponseMessage;
 import org.ubsfree.bookingapp.data.entity.ServiceEntity;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemAlreadyExistsException;
+import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
 import org.ubsfree.bookingapp.service.ModeratorService;
 
@@ -36,7 +37,7 @@ public class ServiceController {
     }
 
     @GetMapping("/{serviceId}")
-    public ServiceEntity concreteService(@PathVariable Long serviceId) {
+    public ServiceEntity concreteService(@PathVariable Long serviceId) throws ItemNotFoundException {
         return moderatorService.concreteService(serviceId);
     }
 

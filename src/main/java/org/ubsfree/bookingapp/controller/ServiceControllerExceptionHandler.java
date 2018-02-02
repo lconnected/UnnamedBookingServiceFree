@@ -6,36 +6,38 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemAlreadyExistsException;
+import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.dto.ErrorMessage;
 
 /**
  * Created by lconnected on 18/01/2018.
  */
+@SuppressWarnings("unused")
 @ControllerAdvice
 public class ServiceControllerExceptionHandler {
 
     @ExceptionHandler(UpdateNotExsitingItemException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public Object handleUpdateExceptions(Exception exception) {
+    public Object notAcceptableHandler(Exception exception) {
         return new ErrorMessage(HttpStatus.NOT_ACCEPTABLE.value(), exception.getMessage());
     }
 
     @ExceptionHandler(ItemAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public Object handleAddExceptions(Exception exception) {
+    public Object conflictHandler(Exception exception) {
         return new ErrorMessage(HttpStatus.CONFLICT.value(), exception.getMessage());
     }
 
-    @ExceptionHandler(DeleteNotExsitingItemException.class)
+    @ExceptionHandler({DeleteNotExsitingItemException.class, ItemNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Object handleRemoveExceptions(Exception exception) {
+    public Object notFoundHandler(Exception exception) {
         return new ErrorMessage(HttpStatus.NOT_FOUND.value(), exception.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Object handleOtherExceptions(Exception exception) {
+    public Object internalErrorsHandler(Exception exception) {
         return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
     }
 

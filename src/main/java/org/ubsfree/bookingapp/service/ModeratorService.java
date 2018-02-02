@@ -8,6 +8,7 @@ import org.ubsfree.bookingapp.data.ServiceRepository;
 import org.ubsfree.bookingapp.data.entity.ServiceEntity;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemAlreadyExistsException;
+import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
 
 /**
@@ -23,8 +24,13 @@ public class ModeratorService {
         return serviceRepository.findAll(pageable);
     }
 
-    public ServiceEntity concreteService(Long serviceId) {
-        return serviceRepository.findOne(serviceId);
+    public ServiceEntity concreteService(Long serviceId) throws ItemNotFoundException {
+        ServiceEntity entity = serviceRepository.findOne(serviceId);
+        if (entity != null) {
+            return entity;
+        } else {
+            throw new ItemNotFoundException("ServiceEntity id: " + serviceId + " not found");
+        }
     }
 
     public ServiceEntity addService(ServiceEntity entity) throws ItemAlreadyExistsException {
