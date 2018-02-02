@@ -9,5 +9,5 @@ import org.ubsfree.bookingapp.data.entity.ServiceEntity;
  */
 @Repository
 public interface ServiceRepository extends JpaRepository<ServiceEntity, Long> {
-
+    //empty
 }
