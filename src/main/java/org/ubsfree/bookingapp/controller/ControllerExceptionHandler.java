@@ -15,7 +15,7 @@ import org.ubsfree.bookingapp.exception.data.dto.ErrorMessage;
  */
 @SuppressWarnings("unused")
 @ControllerAdvice
-public class ServiceControllerExceptionHandler {
+public class ControllerExceptionHandler {
 
     @ExceptionHandler(UpdateNotExsitingItemException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)

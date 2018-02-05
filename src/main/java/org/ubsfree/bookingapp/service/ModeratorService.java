@@ -15,25 +15,28 @@ import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
  * Created by lconnected on 30/01/2018.
  */
 @Service
-public class ModeratorService {
+public class ModeratorService implements DataSupplyService<ServiceEntity> {
 
     @Autowired
     private ServiceRepository serviceRepository;
 
-    public Page<ServiceEntity> listServices(Pageable pageable) {
+    @Override
+    public Page<ServiceEntity> listItems(Pageable pageable) {
         return serviceRepository.findAll(pageable);
     }
 
-    public ServiceEntity concreteService(Long serviceId) throws ItemNotFoundException {
-        ServiceEntity entity = serviceRepository.findOne(serviceId);
+    @Override
+    public ServiceEntity concreteItem(Long entityId) throws ItemNotFoundException {
+        ServiceEntity entity = serviceRepository.findOne(entityId);
         if (entity != null) {
             return entity;
         } else {
-            throw new ItemNotFoundException("ServiceEntity id: " + serviceId + " not found");
+            throw new ItemNotFoundException("ServiceEntity id: " + entityId + " not found");
         }
     }
 
-    public ServiceEntity addService(ServiceEntity entity) throws ItemAlreadyExistsException {
+    @Override
+    public ServiceEntity addItem(ServiceEntity entity) throws ItemAlreadyExistsException {
         if (entity.getId() == null || entity.getId() != null && !serviceRepository.exists(entity.getId())) {
             return serviceRepository.save(entity);
         } else {
@@ -41,7 +44,8 @@ public class ModeratorService {
         }
     }
 
-    public ServiceEntity updateService(ServiceEntity entity) throws UpdateNotExsitingItemException {
+    @Override
+    public ServiceEntity updateItem(ServiceEntity entity) throws UpdateNotExsitingItemException {
         if (serviceRepository.exists(entity.getId())) {
             return serviceRepository.save(entity);
         } else {
@@ -49,7 +53,8 @@ public class ModeratorService {
         }
     }
 
-    public void deleteService(Long serviceId) throws DeleteNotExsitingItemException {
+    @Override
+    public void deleteItem(Long serviceId) throws DeleteNotExsitingItemException {
         if (serviceRepository.exists(serviceId)) {
             serviceRepository.delete(serviceId);
         } else {

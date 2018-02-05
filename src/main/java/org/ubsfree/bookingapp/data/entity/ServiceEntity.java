@@ -7,11 +7,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "service")
-@SequenceGenerator(name = "service_id_seq", sequenceName = "service_id_seq")
-public class ServiceEntity {
+public class ServiceEntity implements SimpleIdEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_id_seq")
+    @SequenceGenerator(name = "service_id_generator", sequenceName = "service_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_id_generator")
     private Long id;
 
     @Column

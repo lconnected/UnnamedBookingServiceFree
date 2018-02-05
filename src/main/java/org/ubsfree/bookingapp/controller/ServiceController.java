@@ -11,6 +11,7 @@ import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemAlreadyExistsException;
 import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
+import org.ubsfree.bookingapp.service.DataSupplyService;
 import org.ubsfree.bookingapp.service.ModeratorService;
 
 /**
@@ -42,7 +43,7 @@ public class ServiceController {
      */
     @GetMapping("/list")
     public Page<ServiceEntity> listServices(Pageable pageable) {
-        return moderatorService.listServices(pageable);
+        return moderatorService.listItems(pageable);
     }
 
     /**
@@ -63,7 +64,7 @@ public class ServiceController {
      */
     @GetMapping("/{serviceId}")
     public ServiceEntity concreteService(@PathVariable Long serviceId) throws ItemNotFoundException {
-        return moderatorService.concreteService(serviceId);
+        return moderatorService.concreteItem(serviceId);
     }
 
     /**
@@ -86,17 +87,17 @@ public class ServiceController {
     @PutMapping("/{serviceId}")
     public ServiceEntity updateService(@PathVariable Long serviceId, @RequestBody ServiceEntity entity) throws UpdateNotExsitingItemException {
         entity.setId(serviceId);
-        return moderatorService.updateService(entity);
+        return moderatorService.updateItem(entity);
     }
 
     @PostMapping
     public ServiceEntity addService(@RequestBody ServiceEntity entity) throws ItemAlreadyExistsException {
-        return moderatorService.addService(entity);
+        return moderatorService.addItem(entity);
     }
 
     @DeleteMapping("/{serviceId}")
     public ResponseMessage deleteService(@PathVariable Long serviceId) throws DeleteNotExsitingItemException {
-        moderatorService.deleteService(serviceId);
+        moderatorService.deleteItem(serviceId);
         return new ResponseMessage("Object removed successfully", HttpStatus.OK.value());
     }
 }
