@@ -10,7 +10,7 @@ import org.ubsfree.bookingapp.data.entity.ServiceEntity;
  * Created by lconnected on 30/01/2018.
  */
 @Service
-public class ModeratorService implements DataSupplyService<ServiceEntity> {
+public class ServicesService implements CrudService<ServiceEntity> {
 
     @Autowired
     private ServiceRepository serviceRepository;

@@ -13,7 +13,7 @@ import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
  *
  * @param <E> configured JPA entity
  */
-public interface DataSupplyService<E extends SimpleIdEntity> {
+public interface CrudService<E extends SimpleIdEntity> {
 
     JpaRepository<E, Long> getRepository();
 

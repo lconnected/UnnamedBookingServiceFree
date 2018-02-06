@@ -10,7 +10,7 @@ import org.ubsfree.bookingapp.data.entity.BookingEntity;
  * Created by lconnected on 30/01/2018.
  */
 @Service
-public class BookingService implements DataSupplyService<BookingEntity> {
+public class BookingService implements CrudService<BookingEntity> {
 
     @Autowired
     private BookingRepository bookingRepository;

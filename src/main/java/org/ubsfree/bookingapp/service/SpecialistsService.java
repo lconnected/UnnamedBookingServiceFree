@@ -10,7 +10,7 @@ import org.ubsfree.bookingapp.data.entity.SpecialistEntity;
  * Created by lconnected on 30/01/2018.
  */
 @Service
-public class SpecialistsService implements DataSupplyService<SpecialistEntity> {
+public class SpecialistsService implements CrudService<SpecialistEntity> {
 
     @Autowired
     private SpecialistRepository specialistRepository;
