@@ -6,12 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.ubsfree.bookingapp.controller.dto.ResponseMessage;
+import org.ubsfree.bookingapp.data.entity.BookingEntity;
 import org.ubsfree.bookingapp.data.entity.ServiceEntity;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemAlreadyExistsException;
 import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
-import org.ubsfree.bookingapp.service.DataSupplyService;
+import org.ubsfree.bookingapp.service.BookingService;
 import org.ubsfree.bookingapp.service.ModeratorService;
 
 /**
@@ -23,6 +24,14 @@ public class ServiceController {
 
     @Autowired
     private ModeratorService moderatorService;
+
+    @Autowired
+    private BookingService bookingService;
+
+    @GetMapping("aza")
+    public Page<BookingEntity> getAza(Pageable pageable) {
+        return bookingService.listItems(pageable);
+    }
 
     /**
      * <p>Method to retrieve page of Services.</p>
