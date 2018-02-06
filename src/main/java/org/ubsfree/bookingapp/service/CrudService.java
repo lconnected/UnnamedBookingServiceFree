@@ -2,12 +2,14 @@ package org.ubsfree.bookingapp.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.ubsfree.bookingapp.data.entity.SimpleIdEntity;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
-import org.ubsfree.bookingapp.exception.data.ItemAlreadyExistsException;
 import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
+
+import javax.transaction.Transactional;
 
 /**
  *
@@ -16,6 +18,8 @@ import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
 public interface CrudService<E extends SimpleIdEntity> {
 
     JpaRepository<E, Long> getRepository();
+
+    JpaContext getJpaContext();
 
     Class<E> getEntityClass();
 
@@ -32,12 +36,11 @@ public interface CrudService<E extends SimpleIdEntity> {
         }
     }
 
-    default E addItem(E entity) throws ItemAlreadyExistsException {
-        if (entity.getId() == null || entity.getId() != null && !getRepository().exists(entity.getId())) {
-            return getRepository().save(entity);
-        } else {
-            throw new ItemAlreadyExistsException(getEntityClass() + " id: " + entity.getId() + " has not been added because it already exists");
-        }
+    @Transactional
+    default E addItem(E entity) {
+        getRepository().saveAndFlush(entity);
+        getJpaContext().getEntityManagerByManagedType(getEntityClass()).refresh(entity);
+        return entity;
     }
 
     default E updateItem(E entity) throws UpdateNotExsitingItemException {

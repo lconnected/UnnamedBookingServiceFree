@@ -18,12 +18,18 @@ public class BookingEntity implements SimpleIdEntity {
     @Column
     private Date timeStart;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "service_id")
-    private ServiceEntity service;
+    @Column
+    private Long serviceId;
 
     @ManyToOne
-    @JoinColumn(name = "specialist_id")
+    @JoinColumn(name = "serviceId", insertable = false, updatable = false)
+    private ServiceEntity service;
+
+    @Column
+    private Long specialistId;
+
+    @ManyToOne
+    @JoinColumn(name = "specialistId", insertable = false, updatable = false)
     private SpecialistEntity specialist;
 
     @Override
@@ -43,12 +49,28 @@ public class BookingEntity implements SimpleIdEntity {
         this.timeStart = timeStart;
     }
 
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
+    }
+
     public ServiceEntity getService() {
         return service;
     }
 
     public void setService(ServiceEntity service) {
         this.service = service;
+    }
+
+    public Long getSpecialistId() {
+        return specialistId;
+    }
+
+    public void setSpecialistId(Long specialistId) {
+        this.specialistId = specialistId;
     }
 
     public SpecialistEntity getSpecialist() {

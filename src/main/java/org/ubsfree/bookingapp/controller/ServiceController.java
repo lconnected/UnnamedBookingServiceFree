@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.ubsfree.bookingapp.controller.dto.ResponseMessage;
 import org.ubsfree.bookingapp.data.entity.ServiceEntity;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
-import org.ubsfree.bookingapp.exception.data.ItemAlreadyExistsException;
 import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
 import org.ubsfree.bookingapp.service.CrudService;
@@ -69,7 +68,7 @@ public class ServiceController {
     }
 
     /**
-     * <p>Method to update concrete Service.</p>
+     * <p>Method updates concrete Service</p>
      * <p>Request mapping: /service/{serviceId}</p>
      * <p>Request method: <b>PUT</b></p>
      * <p>Path variables: </p>
@@ -91,11 +90,41 @@ public class ServiceController {
         return service.updateItem(entity);
     }
 
+    /**
+     * <p>Method adds new Service.</p>
+     * <p>Request mapping: /service</p>
+     * <p>Request method: <b>POST</b></p>
+     * <p>Path variables: none</p>
+     * <p>Request parameters: none</p>
+     * <p>Request body: ServiceEntity object.</p>
+     * <p>Note: Id specified in request body will be ignored then
+     * new id will be generated and returned in response</p>
+     *
+     * @param entity ServiceEntity object without id
+     * @return single updated ServiceEntity
+     */
     @PostMapping
-    public ServiceEntity addService(@RequestBody ServiceEntity entity) throws ItemAlreadyExistsException {
+    public ServiceEntity addService(@RequestBody ServiceEntity entity) {
+        entity.setId(null);
         return service.addItem(entity);
     }
 
+    /**
+     * <p>Deletes concrete Service.</p>
+     * <p>Request mapping: /service/{serviceId}</p>
+     * <p>Request method: <b>DELETE</b></p>
+     * <p>Path variables: </p>
+     * <ul>
+     * <li>serviceId - the unique id of Service</li>
+     * </ul>
+     * <p>Request parameters: none</p>
+     * <p>Request body: none</p>
+     * <p>Note: none</p>
+     *
+     * @param serviceId ServiceEntity object id
+     * @throws DeleteNotExsitingItemException when try delete item does not exist
+     * @return operation informational message
+     */
     @DeleteMapping("/{serviceId}")
     public ResponseMessage deleteService(@PathVariable Long serviceId) throws DeleteNotExsitingItemException {
         service.deleteItem(serviceId);

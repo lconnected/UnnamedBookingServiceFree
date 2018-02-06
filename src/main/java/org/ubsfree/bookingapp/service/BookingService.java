@@ -1,6 +1,7 @@
 package org.ubsfree.bookingapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.ubsfree.bookingapp.data.BookingRepository;
@@ -15,6 +16,8 @@ public class BookingService implements CrudService<BookingEntity> {
     @Autowired
     private BookingRepository bookingRepository;
 
+    @Autowired
+    private JpaContext jpaContext;
 
     @Override
     public JpaRepository<BookingEntity, Long> getRepository() {
@@ -22,7 +25,13 @@ public class BookingService implements CrudService<BookingEntity> {
     }
 
     @Override
+    public JpaContext getJpaContext() {
+        return jpaContext;
+    }
+
+    @Override
     public Class<BookingEntity> getEntityClass() {
         return BookingEntity.class;
     }
+
 }
