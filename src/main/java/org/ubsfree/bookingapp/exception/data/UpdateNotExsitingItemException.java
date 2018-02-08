@@ -3,7 +3,7 @@ package org.ubsfree.bookingapp.exception.data;
 /**
  * Created by lconnected on 01/02/2018.
  */
-public class UpdateNotExsitingItemException extends Exception {
+public class UpdateNotExsitingItemException extends DataAccessException {
     public UpdateNotExsitingItemException() {
         super();
     }
