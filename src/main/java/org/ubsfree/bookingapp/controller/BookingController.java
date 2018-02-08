@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.ubsfree.bookingapp.controller.dto.BookingOperationResult;
 import org.ubsfree.bookingapp.controller.dto.ResponseMessage;
 import org.ubsfree.bookingapp.data.entity.BookingEntity;
 import org.ubsfree.bookingapp.exception.booking.BookingDateInPastException;
@@ -44,7 +45,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public BookingEntity addBooking(@RequestBody BookingEntity entity) throws BookingException {
+    public BookingOperationResult addBooking(@RequestBody BookingEntity entity) throws BookingException {
         entity.setId(null);
         return service.addBooking(entity);
     }

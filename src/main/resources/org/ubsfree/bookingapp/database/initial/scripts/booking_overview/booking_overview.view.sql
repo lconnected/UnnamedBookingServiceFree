@@ -1,5 +1,6 @@
 CREATE OR REPLACE VIEW booking_overview AS
   SELECT
+    b.id,
     b.time_start,
     b.time_start + sr.duration_minutes * INTERVAL '1 minute'                         AS time_end,
     b.time_start + (sr.duration_minutes + sr.cooldown_minutes) * INTERVAL '1 minute' AS next_available_booking,
