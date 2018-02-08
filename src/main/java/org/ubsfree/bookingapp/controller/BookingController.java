@@ -8,9 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.ubsfree.bookingapp.controller.dto.ResponseMessage;
 import org.ubsfree.bookingapp.data.entity.BookingEntity;
+import org.ubsfree.bookingapp.exception.booking.BookingDateInPastException;
+import org.ubsfree.bookingapp.exception.booking.BookingException;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
+import org.ubsfree.bookingapp.service.BookingService;
 import org.ubsfree.bookingapp.service.CrudService;
 
 /**
@@ -22,7 +25,7 @@ public class BookingController {
 
     @Autowired
     @Qualifier("bookingService")
-    private CrudService<BookingEntity> service;
+    private BookingService service;
 
     @GetMapping("/list")
     public Page<BookingEntity> listBookings(Pageable pageable) {
@@ -41,9 +44,9 @@ public class BookingController {
     }
 
     @PostMapping
-    public BookingEntity addBooking(@RequestBody BookingEntity entity) {
+    public BookingEntity addBooking(@RequestBody BookingEntity entity) throws BookingException {
         entity.setId(null);
-        return service.addItem(entity);
+        return service.addBooking(entity);
     }
 
     @DeleteMapping("/{bookingId}")

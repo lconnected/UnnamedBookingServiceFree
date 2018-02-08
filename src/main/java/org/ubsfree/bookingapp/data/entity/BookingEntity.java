@@ -15,17 +15,17 @@ public class BookingEntity implements SimpleIdEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_id_generator")
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private Date timeStart;
 
-    @Column
+    @Column(nullable = false)
     private Long serviceId;
 
     @ManyToOne
     @JoinColumn(name = "serviceId", insertable = false, updatable = false)
     private ServiceEntity service;
 
-    @Column
+    @Column(nullable = false)
     private Long specialistId;
 
     @ManyToOne
