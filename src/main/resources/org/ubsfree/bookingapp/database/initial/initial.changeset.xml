@@ -38,6 +38,7 @@
       <column name="cooldown_minutes" type="number">
         <constraints nullable="false"/>
       </column>
+      <column name="conflictable" type="boolean" defaultValueBoolean="true"/>
     </createTable>
     <createTable tableName="specialist">
       <column name="id" type="serial">

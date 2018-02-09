@@ -1,8 +1,8 @@
 -- Services
 INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes) VALUES (1, 'ServiceEntity-45-15', 45, 15);
 INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes) VALUES (2, 'ServiceEntity-60-0', 60, 0);
-INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes) VALUES (3, 'ServiceEntity-30-5', 30, 5);
-INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes) VALUES (4, 'ServiceEntity-30-10', 30, 10);
+INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes, conflictable) VALUES (3, 'ServiceEntity-30-5', 30, 5, false);
+INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes, conflictable) VALUES (4, 'ServiceEntity-30-10', 30, 10, false);
 INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes) VALUES (5, 'ServiceEntity-50-10', 50, 10);
 INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes) VALUES (6, 'ServiceEntity-60-10', 60, 10);
 INSERT INTO "service" (id, name, duration_minutes, cooldown_minutes) VALUES (7, 'ServiceEntity-60-15', 60, 15);

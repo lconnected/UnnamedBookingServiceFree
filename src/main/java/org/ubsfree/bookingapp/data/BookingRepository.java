@@ -19,8 +19,9 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
             "join booking b on b.id = bo.id " +
             "where :time_start > bo.time_start - :total_duration * INTERVAL '1 minutes' " +
             "and :time_start < bo.next_available_booking " +
-            "and :service_id = bo.service_id " +
-            "and :specialist_id = bo.specialist_id", nativeQuery = true)
+            "and (:specialist_id = bo.specialist_id " +
+            "or :service_id = bo.service_id and bo.conflictable = true)"
+            , nativeQuery = true)
     List<BookingEntity> checkConflicts(@Param("time_start") Date timeStart,
                               @Param("service_id") Long serviceId,
                               @Param("specialist_id") Long specialistId,

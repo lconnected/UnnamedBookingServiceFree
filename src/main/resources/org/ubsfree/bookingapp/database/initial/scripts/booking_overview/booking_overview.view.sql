@@ -7,6 +7,7 @@ CREATE OR REPLACE VIEW booking_overview AS
     sr.duration_minutes,
     sr.cooldown_minutes,
     b.service_id,
+    sr.conflictable,
     b.specialist_id
   FROM booking b
     JOIN service sr ON b.service_id = sr.id

@@ -26,6 +26,9 @@ public class ServiceEntity implements SimpleIdEntity {
     @Column
     private Integer cooldownMinutes;
 
+    @Column
+    private Boolean conflictable;
+
     public Long getId() {
         return id;
     }
@@ -64,5 +67,13 @@ public class ServiceEntity implements SimpleIdEntity {
 
     public void setCooldownMinutes(Integer cooldownMinutes) {
         this.cooldownMinutes = cooldownMinutes;
+    }
+
+    public Boolean getConflictable() {
+        return conflictable;
+    }
+
+    public void setConflictable(Boolean conflictable) {
+        this.conflictable = conflictable;
     }
 }
