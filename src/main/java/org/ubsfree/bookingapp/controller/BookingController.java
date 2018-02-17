@@ -9,13 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.ubsfree.bookingapp.controller.dto.BookingOperationResult;
 import org.ubsfree.bookingapp.controller.dto.ResponseMessage;
 import org.ubsfree.bookingapp.data.entity.BookingEntity;
-import org.ubsfree.bookingapp.exception.booking.BookingDateInPastException;
 import org.ubsfree.bookingapp.exception.booking.BookingException;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import org.ubsfree.bookingapp.exception.data.UpdateNotExsitingItemException;
 import org.ubsfree.bookingapp.service.BookingService;
-import org.ubsfree.bookingapp.service.CrudService;
 
 /**
  * Created by lconnected on 18/01/2018.
