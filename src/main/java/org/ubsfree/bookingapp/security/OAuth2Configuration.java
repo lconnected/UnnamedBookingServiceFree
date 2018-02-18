@@ -15,8 +15,10 @@ public class OAuth2Configuration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and().authorizeRequests()
+//                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .csrf().disable()
+//                .and()
+                .authorizeRequests()
                 .antMatchers("/", "/login**").permitAll()
                 .antMatchers("/user**", "/booking/**", "/service/**", "/specialist/**").authenticated()
                 .and().logout().logoutSuccessUrl("/").permitAll();

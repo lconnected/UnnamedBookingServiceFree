@@ -23,6 +23,9 @@
       <column name="specialist_id" type="number">
         <constraints nullable="false"/>
       </column>
+      <column name="user_id" type="number">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
     <createTable tableName="service">
       <column name="id" type="serial">
@@ -39,6 +42,9 @@
         <constraints nullable="false"/>
       </column>
       <column name="conflictable" type="boolean" defaultValueBoolean="true"/>
+      <column name="user_id" type="number">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
     <createTable tableName="specialist">
       <column name="id" type="serial">
@@ -51,6 +57,9 @@
         <constraints nullable="false"/>
       </column>
       <column name="middle_name" type="varchar"/>
+      <column name="user_id" type="number">
+        <constraints nullable="false"/>
+      </column>
     </createTable>
     <createTable tableName="service_specialist">
       <column name="service_id" type="number">
@@ -60,11 +69,23 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
+    <createTable tableName="user">
+      <column name="id" type="serial">
+        <constraints nullable="false" primaryKey="true" unique="true"/>
+      </column>
+      <column name="outer_id" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="varchar">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
     <rollback>
       <dropTable tableName="booking" cascadeConstraints="true"/>
       <dropTable tableName="service" cascadeConstraints="true"/>
       <dropTable tableName="specialist" cascadeConstraints="true"/>
       <dropTable tableName="service_specialist" cascadeConstraints="true"/>
+      <dropTable tableName="user" cascadeConstraints="true"/>
     </rollback>
   </changeSet>
 

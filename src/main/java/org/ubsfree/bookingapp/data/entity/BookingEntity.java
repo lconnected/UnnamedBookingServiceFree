@@ -32,6 +32,9 @@ public class BookingEntity implements SimpleIdEntity {
     @JoinColumn(name = "specialistId", insertable = false, updatable = false)
     private SpecialistEntity specialist;
 
+    @Column(nullable = false)
+    private Long userId;
+
     @Override
     public Long getId() {
         return id;
@@ -79,5 +82,13 @@ public class BookingEntity implements SimpleIdEntity {
 
     public void setSpecialist(SpecialistEntity specialist) {
         this.specialist = specialist;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

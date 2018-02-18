@@ -1,6 +1,4 @@
-package org.ubsfree.bookingapp.controller.dto;
-
-import org.ubsfree.bookingapp.data.entity.BookingEntity;
+package org.ubsfree.bookingapp.data.dto.booking;
 
 import java.util.List;
 
@@ -10,8 +8,8 @@ import java.util.List;
 public class BookingOperationResult {
 
     private String message;
-    private BookingEntity result;
-    private List<BookingEntity> conflicts;
+    private BookingDto result;
+    private List<BookingDto> conflicts;
 
     public BookingOperationResult() {
     }
@@ -24,19 +22,19 @@ public class BookingOperationResult {
         this.message = message;
     }
 
-    public BookingEntity getResult() {
+    public BookingDto getResult() {
         return result;
     }
 
-    public void setResult(BookingEntity result) {
+    public void setResult(BookingDto result) {
         this.result = result;
     }
 
-    public List<BookingEntity> getConflicts() {
+    public List<BookingDto> getConflicts() {
         return conflicts;
     }
 
-    public void setConflicts(List<BookingEntity> conflicts) {
+    public void setConflicts(List<BookingDto> conflicts) {
         this.conflicts = conflicts;
     }
 }

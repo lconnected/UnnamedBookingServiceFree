@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.ubsfree.bookingapp.controller.dto.ResponseMessage;
+import org.ubsfree.bookingapp.data.dto.common.ResponseMessage;
 import org.ubsfree.bookingapp.data.entity.ServiceEntity;
 import org.ubsfree.bookingapp.exception.data.DeleteNotExsitingItemException;
 import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;

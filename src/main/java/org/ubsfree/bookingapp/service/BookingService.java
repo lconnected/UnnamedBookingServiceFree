@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.ubsfree.bookingapp.controller.dto.BookingOperationResult;
+import org.ubsfree.bookingapp.data.dto.booking.BookingDto;
+import org.ubsfree.bookingapp.data.dto.booking.BookingOperationResult;
 import org.ubsfree.bookingapp.data.BookingRepository;
 import org.ubsfree.bookingapp.data.entity.BookingEntity;
 import org.ubsfree.bookingapp.data.entity.ServiceEntity;
@@ -17,6 +18,7 @@ import org.ubsfree.bookingapp.exception.data.ItemNotFoundException;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by lconnected on 30/01/2018.
@@ -32,6 +34,9 @@ public class BookingService implements CrudService<BookingEntity> {
 
     @Autowired
     private JpaContext jpaContext;
+
+    @Autowired
+    private EntityService entityService;
 
     @Override
     public JpaRepository<BookingEntity, Long> getRepository() {
@@ -75,9 +80,12 @@ public class BookingService implements CrudService<BookingEntity> {
         if (CollectionUtils.isEmpty(conflicts)) {
             bookingRepository.saveAndFlush(entity);
             getJpaContext().getEntityManagerByManagedType(getEntityClass()).refresh(entity);
-            bookingOperationResult.setResult(entity);
+            bookingOperationResult.setResult(entityService.toDto(entity));
         } else {
-            bookingOperationResult.setConflicts(conflicts);
+            List<BookingDto> convertedConflicts = conflicts.stream()
+                    .map(item -> entityService.toDto(item))
+                    .collect(Collectors.toList());
+            bookingOperationResult.setConflicts(convertedConflicts);
         }
         return bookingOperationResult;
     }

@@ -1,4 +1,4 @@
-package org.ubsfree.bookingapp.controller.dto;
+package org.ubsfree.bookingapp.data.dto.common;
 
 /**
  * Created by lconnected on 02/02/2018.
