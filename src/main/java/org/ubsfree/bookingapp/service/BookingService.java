@@ -80,10 +80,10 @@ public class BookingService implements CrudService<BookingEntity> {
         if (CollectionUtils.isEmpty(conflicts)) {
             bookingRepository.saveAndFlush(entity);
             getJpaContext().getEntityManagerByManagedType(getEntityClass()).refresh(entity);
-            bookingOperationResult.setResult(entityService.toDto(entity));
+            bookingOperationResult.setResult(entityService.fromEntity(entity));
         } else {
             List<BookingDto> convertedConflicts = conflicts.stream()
-                    .map(item -> entityService.toDto(item))
+                    .map(item -> entityService.fromEntity(item))
                     .collect(Collectors.toList());
             bookingOperationResult.setConflicts(convertedConflicts);
         }

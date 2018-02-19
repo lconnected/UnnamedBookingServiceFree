@@ -14,6 +14,10 @@ import org.ubsfree.bookingapp.data.entity.SpecialistEntity
 @Service
 class EntityService {
 
+    /**
+     * Coneverts `booking` from dto to entity class
+     * @return @Entity object
+     */
     fun fromDto(dto: BookingDto): BookingEntity {
         val entity = BookingEntity()
         entity.id = dto.id
@@ -23,16 +27,24 @@ class EntityService {
         return entity
     }
 
-    fun toDto(entity: BookingEntity) : BookingDto {
+    /**
+     * Coneverts `booking` from entity to dto class
+     * @return data class object
+     */
+    fun fromEntity(entity: BookingEntity) : BookingDto {
         val dto = BookingDto()
         dto.id = entity.id
         dto.timeStart = entity.timeStart
-        dto.service = toDto(entity.service)
+        dto.service = fromEntity(entity.service)
         dto.serviceId = entity.serviceId
         dto.specialistId = entity.specialistId
         return dto
     }
 
+    /**
+     * Coneverts `service` from dto to entity class
+     * @return @Entity object
+     */
     fun fromDto(dto: ServiceDto) : ServiceEntity {
         val entity = ServiceEntity()
         entity.id = dto.id
@@ -44,7 +56,11 @@ class EntityService {
         return entity
     }
 
-    fun toDto(entity: ServiceEntity) : ServiceDto {
+    /**
+     * Coneverts `service` from entity to dto class
+     * @return data class object
+     */
+    fun fromEntity(entity: ServiceEntity) : ServiceDto {
         val dto = ServiceDto()
         dto.id = entity.id
         dto.name = entity.name
@@ -55,6 +71,10 @@ class EntityService {
         return dto
     }
 
+    /**
+     * Coneverts `specialist` from dto to entity class
+     * @return @Entity object
+     */
     fun fromDto(dto: SpecialistDto) : SpecialistEntity {
         val entity = SpecialistEntity();
         entity.id = dto.id
@@ -64,7 +84,11 @@ class EntityService {
         return entity
     }
 
-    fun toDto(entity: SpecialistEntity) : SpecialistDto {
+    /**
+     * Coneverts `specialist` from entity to dto class
+     * @return data class object
+     */
+    fun fromEntity(entity: SpecialistEntity) : SpecialistDto {
         val dto = SpecialistDto()
         dto.id = entity.id
         dto.firstName = entity.firstName
