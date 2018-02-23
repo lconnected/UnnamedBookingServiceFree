@@ -16,6 +16,7 @@ buildscript {
         classpath group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+        classpath('se.transmode.gradle:gradle-docker:1.2')
     }
 }
 
@@ -26,10 +27,16 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'liquibase'
+apply plugin: 'docker'
 
 group = 'org.ubs-free'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+jar {
+    baseName = 'booking-app'
+    version =  '1.0'
+}
 
 repositories {
     mavenCentral()
@@ -69,15 +76,34 @@ task('databaseDev') {
     doLast {
         println "installing database for developers environment"
         def changeLog = "$projectDir/src/main/resources/org/ubsfree/bookingapp/database/changelog-dev.xml"
+        def applicationProperties = new Properties()
+        file("$projectDir/src/main/resources/application.properties").withInputStream { applicationProperties.load(it) }
+
         liquibase {
             activities {
                 main {
                     changeLogFile changeLog
-                    url 'jdbc:postgresql://localhost:5432/booking-app-dev'
-                    username 'postgres'
-                    password 'root00'
+                    url applicationProperties.getProperty("spring.datasource.url")
+                    username applicationProperties.getProperty("spring.datasource.username")
+                    password applicationProperties.getProperty("spring.datasource.password")
                 }
             }
+        }
+    }
+}
+
+//docker {
+//    useApi true
+//}
+
+task buildDocker(type: Docker) {
+    push = false
+    applicationName = jar.baseName
+    dockerfile = file('Dockerfile')
+    doFirst {
+        copy {
+            from jar
+            into stageDir
         }
     }
 }
