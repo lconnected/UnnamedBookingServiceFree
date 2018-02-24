@@ -92,6 +92,10 @@ task('databaseDev') {
     }
 }
 
+docker {
+    maintainer 'Lev Khrushchev <levas1992@gmail.com>'
+}
+
 /**
  * Builds docker image, tags it as version number
  * and pushes it to hub.docker.com
