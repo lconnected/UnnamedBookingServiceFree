@@ -9,6 +9,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
@@ -23,9 +24,13 @@ public class OAuth2Configuration extends WebSecurityConfigurerAdapter {
 //                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .csrf().disable()
                 .cors().and()
-                .authorizeRequests()
-                .antMatchers("/", "/login**").permitAll()
-                .antMatchers("/user**", "/booking/**", "/service/**", "/specialist/**").authenticated()
+                .exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                })
+                .and().authorizeRequests()
+                .antMatchers("/", "/login**", "/connect/**").permitAll()
+                .antMatchers("/user**", "/booking/**", "/service/**", "/specialist/**").hasRole("USER")
+                .and().formLogin().successHandler((request, response, authentication) -> {})
                 .and().logout().logoutSuccessUrl("/").permitAll();
     }
 
