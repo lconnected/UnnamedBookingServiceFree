@@ -30,7 +30,6 @@ public class OAuth2Configuration extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests()
                 .antMatchers("/", "/login**", "/connect/**").permitAll()
                 .antMatchers("/user**", "/booking/**", "/service/**", "/specialist/**").hasRole("USER")
-                .and().formLogin().successHandler((request, response, authentication) -> {})
                 .and().logout().logoutSuccessUrl("/").permitAll();
     }
 
