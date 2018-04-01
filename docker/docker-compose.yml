@@ -1,0 +1,29 @@
+# Use postgres/example user/password credentials
+version: '3.2'
+
+services:
+
+  dblocal:
+    image: postgres
+    ports:
+      - 5000:5432
+    environment:
+      POSTGRES_PASSWORD: root00
+    volumes:
+      - type: volume
+        source: psql_data
+        target: /var/lib/postgresql/data
+    restart: always
+    command: psql -c "CREATE DATABASE booking-app-dev;"
+    command: echo DATABASE CREATED
+
+  java_app:
+    image: lconnected/booking-app
+    depends_on:
+        - dblocal
+    ports:
+      - 8082:8080
+    restart: always
+
+volumes:
+  psql_data:

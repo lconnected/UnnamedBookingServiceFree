@@ -43,5 +43,4 @@ public class OAuth2Configuration extends WebSecurityConfigurerAdapter {
         return source;
     }
 
-
 }

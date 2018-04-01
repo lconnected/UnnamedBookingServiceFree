@@ -8,6 +8,4 @@ data class ServiceDto(var id: Long = -1,
                       var description: String? = null,
                       var durationMinutes: Int? = null,
                       var cooldownMinutes: Int? = null,
-                      var conflictable: Boolean? = null) {
-    // empty
-}
+                      var conflictable: Boolean? = null)

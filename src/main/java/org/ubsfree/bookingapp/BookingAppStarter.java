@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
 
 @SpringBootApplication(exclude = LiquibaseAutoConfiguration.class)
-public class BookingAppApplication {
+public class BookingAppStarter {
 
     public static void main(String[] args) {
-        SpringApplication.run(BookingAppApplication.class, args);
+        SpringApplication.run(BookingAppStarter.class, args);
     }
 }

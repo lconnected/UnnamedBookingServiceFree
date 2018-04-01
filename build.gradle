@@ -103,7 +103,7 @@ docker {
 task buildDocker(type: Docker) {
     push = true
     applicationName = jar.baseName
-    dockerfile = file('Dockerfile')
+    dockerfile = file('docker/Dockerfile')
     doFirst {
         copy {
             from jar
@@ -117,14 +117,19 @@ task buildDocker(type: Docker) {
  * and pushes it to hub.docker.com
  */
 task buildDockerLatest(type: Docker) {
-    push = true
+//    push = true
+    push = false
     tagVersion = 'latest'
     applicationName = jar.baseName
-    dockerfile = file('Dockerfile')
+    dockerfile = file('docker/Dockerfile')
     doFirst {
         copy {
+            from 'docker/override-docker.properties'
+            into stageDir.absolutePath + '/config'
+        }
+        copy {
             from jar
-            into stageDir
+            into stageDir.absolutePath + '/jar'
         }
     }
 }
