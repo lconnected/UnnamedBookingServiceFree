@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        ext.kotlin_version = '1.2.21'
+        ext.kotlin_version = '1.2.31'
         springBootVersion = '1.5.9.RELEASE'
     }
     repositories {
@@ -22,7 +22,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
-apply plugin: "kotlin-spring"
+apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
@@ -77,15 +77,15 @@ task('databaseDev') {
         println "installing database for developers environment"
         def changeLog = "$projectDir/src/main/resources/org/ubsfree/bookingapp/database/changelog-dev.xml"
         def applicationProperties = new Properties()
-        file("$projectDir/src/main/resources/application.properties").withInputStream { applicationProperties.load(it) }
+        file("$projectDir/src/main/resources/liquibase.properties").withInputStream { applicationProperties.load(it) }
 
         liquibase {
             activities {
                 main {
                     changeLogFile changeLog
-                    url applicationProperties.getProperty("spring.datasource.url")
-                    username applicationProperties.getProperty("spring.datasource.username")
-                    password applicationProperties.getProperty("spring.datasource.password")
+                    url applicationProperties.getProperty("dev.datasource.url")
+                    username applicationProperties.getProperty("dev.datasource.username")
+                    password applicationProperties.getProperty("dev.datasource.password")
                 }
             }
         }
