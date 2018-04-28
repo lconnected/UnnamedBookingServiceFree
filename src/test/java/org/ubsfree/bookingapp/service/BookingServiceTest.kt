@@ -1,28 +1,23 @@
 package org.ubsfree.bookingapp.service
 
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
+import org.ubsfree.bookingapp.BookingAppStarterTest
 import org.ubsfree.bookingapp.data.entity.BookingEntity
-
+import org.ubsfree.bookingapp.exception.booking.BookingDateInPastException
+import java.util.*
 import javax.transaction.Transactional
-
-import java.util.Date
-
-import org.junit.Assert.*
 
 /**
  * Created by lconnected on 09/02/2018.
  */
-@RunWith(SpringRunner::class)
-@SpringBootTest
 @Transactional
-open class BookingServiceTest {
+class BookingServiceTest : BookingAppStarterTest() {
 
     @Autowired
-    private val bookingService: BookingService? = null
+    lateinit var bookingService: BookingService
 
     @Test
     fun serviceInitialized() {
@@ -30,20 +25,33 @@ open class BookingServiceTest {
     }
 
     @Test
-    @Throws(Exception::class)
     fun addBooking() {
-        val initialCount = bookingService!!.repository.count();
+        val initialCount = bookingService.repository.count()
+        assertTrue("initialCount should be initialized", initialCount == 0L)
 
         val bookingEntity = BookingEntity()
-        bookingEntity.serviceId = 1L
-        bookingEntity.specialistId = 1L
-        bookingEntity.userId = 1L
+        bookingEntity.serviceId = 200
+        bookingEntity.specialistId = 300
+        bookingEntity.userId = 1
         val timeStart = Date(Date().time + 10000)
         bookingEntity.timeStart = timeStart
 
         // the main call
         bookingService.addBooking(bookingEntity)
         assertTrue("Table `booking` must contain 1 record", bookingService.repository.count() > initialCount)
+    }
+
+    @Test(expected = BookingDateInPastException::class)
+    fun addBookingInPast() {
+        val bookingEntity = BookingEntity()
+        bookingEntity.serviceId = 200
+        bookingEntity.specialistId = 300
+        bookingEntity.userId = 1
+        val timeStart = Date(Date().time - 10000)
+        bookingEntity.timeStart = timeStart
+
+        // the main call
+        bookingService.addBooking(bookingEntity)
     }
 
 }

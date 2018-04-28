@@ -1,5 +1,6 @@
 package org.ubsfree.bookingapp.service;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaContext;
@@ -28,12 +29,8 @@ public interface CrudService<E extends SimpleIdEntity> {
     }
 
     default E concreteItem(Long entityId) throws ItemNotFoundException {
-        E entity = getRepository().findOne(entityId);
-        if (entity != null) {
-            return entity;
-        } else {
-            throw new ItemNotFoundException(getEntityClass() + " id: " + entityId + " not found");
-        }
+        return getRepository().findById(entityId)
+                .orElseThrow(() -> new ItemNotFoundException(getEntityClass() + " id: " + entityId + " not found"));
     }
 
     @Transactional
@@ -44,7 +41,7 @@ public interface CrudService<E extends SimpleIdEntity> {
     }
 
     default E updateItem(E entity) throws UpdateNotExsitingItemException {
-        if (getRepository().exists(entity.getId())) {
+        if (getRepository().existsById(entity.getId())) {
             return getRepository().save(entity);
         } else {
             throw new UpdateNotExsitingItemException("Can not update " + getEntityClass() + " id: " + entity.getId() + " because it does not exist in database");
@@ -52,8 +49,8 @@ public interface CrudService<E extends SimpleIdEntity> {
     }
 
     default void deleteItem(Long entityId) throws DeleteNotExsitingItemException {
-        if (getRepository().exists(entityId)) {
-            getRepository().delete(entityId);
+        if (getRepository().existsById(entityId)) {
+            getRepository().deleteById(entityId);
         } else {
             throw new DeleteNotExsitingItemException("Can not delete " + getEntityClass() + " id: " + entityId + " because it does not exist in database");
         }

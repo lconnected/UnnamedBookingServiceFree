@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.test.web.servlet.MockMvc;
 import org.ubsfree.bookingapp.BookingAppStarterTest;
 
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -34,12 +35,31 @@ public class ServiceControllerTest extends BookingAppStarterTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.content.*", Matchers.hasSize(Matchers.greaterThan(0))))
-                .andExpect(jsonPath("$.content[0]", Matchers.hasKey("id")))
-                .andExpect(jsonPath("$.content[0]", Matchers.hasKey("name")))
-                .andExpect(jsonPath("$.content[0]", Matchers.hasKey("durationMinutes")))
-                .andExpect(jsonPath("$.content[0]", Matchers.hasKey("cooldownMinutes")))
-                .andExpect(jsonPath("$.content[0]", Matchers.hasKey("conflictable")));
+                .andExpect(jsonPath("$.content[0]", hasKey("id")))
+                .andExpect(jsonPath("$.content[0]", hasKey("name")))
+                .andExpect(jsonPath("$.content[0]", hasKey("durationMinutes")))
+                .andExpect(jsonPath("$.content[0]", hasKey("cooldownMinutes")))
+                .andExpect(jsonPath("$.content[0]", hasKey("conflictable")));
+    }
 
+    @Test
+    public void shouldReturnServiceObject() throws Exception {
+        mockMvc.perform(get("/service/200"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.notNullValue()))
+                .andExpect(jsonPath("$", hasKey("id")))
+                .andExpect(jsonPath("$.id", is(200)))
+                .andExpect(jsonPath("$", hasKey("name")))
+                .andExpect(jsonPath("$.name", is(any(String.class))))
+                .andExpect(jsonPath("$", hasKey("description")))
+                .andExpect(jsonPath("$.description", is(any(String.class))))
+                .andExpect(jsonPath("$", hasKey("durationMinutes")))
+                .andExpect(jsonPath("$.durationMinutes", is(any(Integer.class))))
+                .andExpect(jsonPath("$", hasKey("cooldownMinutes")))
+                .andExpect(jsonPath("$.cooldownMinutes", is(any(Integer.class))))
+                .andExpect(jsonPath("$", hasKey("conflictable")))
+                .andExpect(jsonPath("$.conflictable", is(any(Boolean.class))));
     }
 
 }

@@ -32,13 +32,14 @@ class EntityService {
      * @return data class object
      */
     fun fromEntity(entity: BookingEntity) : BookingDto {
-        val dto = BookingDto()
-        dto.id = entity.id
-        dto.timeStart = entity.timeStart
-        dto.service = fromEntity(entity.service)
-        dto.serviceId = entity.serviceId
-        dto.specialistId = entity.specialistId
-        return dto
+        return BookingDto(
+            id = entity.id,
+            timeStart = entity.timeStart,
+            service = fromEntity(entity.service),
+            serviceId = entity.serviceId,
+            specialistId = entity.specialistId,
+            specialist = fromEntity(entity.specialist)
+        )
     }
 
     /**
@@ -60,15 +61,16 @@ class EntityService {
      * Coneverts `service` from entity to dto class
      * @return data class object
      */
-    fun fromEntity(entity: ServiceEntity) : ServiceDto {
-        val dto = ServiceDto()
-        dto.id = entity.id
-        dto.name = entity.name
-        dto.description = entity.description
-        dto.cooldownMinutes = entity.cooldownMinutes
-        dto.durationMinutes = entity.durationMinutes
-        dto.conflictable = entity.conflictable
-        return dto
+    fun fromEntity(entity: ServiceEntity?): ServiceDto? {
+        entity ?: return null
+        return ServiceDto(
+                id = entity.id,
+                name = entity.name,
+                description = entity.description,
+                cooldownMinutes = entity.cooldownMinutes,
+                durationMinutes = entity.durationMinutes,
+                conflictable = entity.conflictable
+        )
     }
 
     /**
@@ -88,13 +90,14 @@ class EntityService {
      * Coneverts `specialist` from entity to dto class
      * @return data class object
      */
-    fun fromEntity(entity: SpecialistEntity) : SpecialistDto {
-        val dto = SpecialistDto()
-        dto.id = entity.id
-        dto.firstName = entity.firstName
-        dto.secondName = entity.secondName
-        dto.middleName = entity.middleName
-        return dto
+    fun fromEntity(entity: SpecialistEntity?): SpecialistDto? {
+        entity ?: return null
+        return SpecialistDto(
+                id = entity.id,
+                firstName = entity.firstName,
+                secondName = entity.secondName,
+                middleName = entity.middleName
+        )
     }
 
 }
